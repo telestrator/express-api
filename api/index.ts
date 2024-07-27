@@ -1,28 +1,16 @@
 import express from 'express'
 import http from 'node:http'
+import logger from 'morgan'
 
 const app = express()
 const PORT = process.env.PORT ?? 3000
 
-// Passive middleware
-app.use(function (request, response, next) {
-  console.log(`Request received: [${request.method}] ${request.url}`)
-  next()
-})
-
-// Active middleware
-app.use(function (req, res, next) {
-  const minutes = new Date().getMinutes()
-  if (minutes % 2 === 0) {
-    next()
-  } else {
-    res.statusCode = 403
-    res.end('Not authorized')
-  }
-})
+// Logger middleware
+app.use(logger('short'))
 
 app.use(function (req, res) {
-  res.end(`Secret info: the password is ${process.env.PASSWORD}`)
+  res.writeHead(200, { 'Content-Type': 'text/plain' })
+  res.end('Hello, World!')
 })
 
 http.createServer(app).listen(PORT, () => {
