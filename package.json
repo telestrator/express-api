@@ -4,6 +4,9 @@
   "description": "",
   "main": "index.js",
   "type": "module",
+  "imports": {
+    "#logger": "./api/utils/logger.ts"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "lint": "eslint .",
@@ -15,7 +18,8 @@
   "dependencies": {
     "@dotenvx/dotenvx": "^1.6.4",
     "express": "5.0.0-beta.3",
-    "morgan": "^1.10.0"
+    "morgan": "^1.10.0",
+    "winston": "^3.13.1"
   },
   "devDependencies": {
     "@eslint/js": "^9.8.0",
