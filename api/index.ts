@@ -1,39 +1,28 @@
 import express from 'express'
 import http from 'node:http'
-import morgan from 'morgan'
-import { logger } from '#logger'
-
-const morganFormat = ':method :url :status :response-time ms'
+import { loggingMiddleware } from '#middleware/logging'
 
 const app = express()
 const PORT = process.env.PORT ?? 3000
 
-// Logger middleware
-app.use(
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-call -- morgan is a function
-  morgan(morganFormat, {
-    stream: {
-      write: message => {
-        const logObject = {
-          // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-          method: message.split(' ')[0],
-          // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-          url: message.split(' ')[1],
-          // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-          status: message.split(' ')[2],
-          // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-          responseTime: message.split(' ')[3],
-        }
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access,@typescript-eslint/no-unsafe-call -- logger.info is a function
-        logger.info(JSON.stringify(logObject))
-      },
-    },
-  })
-)
+// setup Logging middleware
+const morganFormat = ':method :url :status :response-time ms'
+const createLogObject = (message: string) => {
+  const [method, url, status, responseTime] = message.split(' ')
+
+  return {
+    method,
+    url,
+    status,
+    responseTime,
+  }
+}
+// eslint-disable-next-line @typescript-eslint/no-unsafe-call -- we know it's safe
+app.use(loggingMiddleware(morganFormat, createLogObject))
 
 app.use(function (req, res) {
   res.writeHead(200, { 'Content-Type': 'text/plain' })
-  res.end('Hello, World!')
+  res.end("What's popping?")
 })
 
 http.createServer(app).listen(PORT, () => {

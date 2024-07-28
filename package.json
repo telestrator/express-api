@@ -1,16 +1,29 @@
 {
   "name": "learn-express",
   "version": "0.0.1",
-  "description": "",
-  "main": "index.js",
+  "description": "demo api with express",
   "type": "module",
+  "files": [
+    "dist"
+  ],
   "imports": {
-    "#logger": "./api/utils/logger.ts"
+    "#logger": {
+      "node": "./dist/utils/logger.js",
+      "default": "./api/utils/logger.ts"
+    },
+    "#middleware/*": {
+      "node": "./dist/middleware/*.js",
+      "default": "./api/middleware/*.ts"
+    }
   },
   "scripts": {
+    "build": "tsc",
+    "dev": "dotenvx run -f .env.local -- tsx watch api/index.ts",
+    "start": "node dist/index.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "lint": "eslint .",
-    "dev": "dotenvx run -f .env.local -- tsx watch api/index.ts"
+    "clean": "rm -rf dist",
+    "format": "prettier --write ."
   },
   "keywords": [],
   "author": "George Bockari <bitwhys@cr8iv.io>",

@@ -1,8 +1,9 @@
 # Learning Express.js
 
-[//]: # (TODO: Add a project description)
+[//]: # 'TODO: Add a project description'
 
 ## Express Basics
+
 At a high level Express provides 4 main features:
 
 - **Middleware**: In contrast to vanilla Node, where your requests flow through only
@@ -17,6 +18,7 @@ At a high level Express provides 4 main features:
   change the HTML on the fly and to write the HTML in other languages.
 
 ### Middleware
+
 In Node’s HTTP server, every request goes through one big function. This looks like
 the following listing.
 
@@ -35,6 +37,5 @@ When a request comes in, it will always go through the middleware in the **same 
 in which you use them**
 
 ## Development
+
 First you need to make a copy of the `.env.sample.local` file and rename it to `.env.local` and fill in the necessary values.
-
-

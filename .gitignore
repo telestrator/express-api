@@ -105,3 +105,5 @@ web_modules/
 .yarn/install-state.gz
 .pnp.*
 
+# output
+dist
